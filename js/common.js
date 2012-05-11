@@ -22,7 +22,6 @@
 		// 				size: 32
 		// 			});
 
-		console.log('instance', game);
 	});
 
 })(jQuery);

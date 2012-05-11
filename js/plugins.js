@@ -229,7 +229,7 @@ var Ease = Ease || {};
 			var block = $('<div />').addClass('inputBlock '+name);
 			
 			$('<label />', {
-				for: name,
+				//for: name,
 				text: label
 			}).appendTo( block );
 			
