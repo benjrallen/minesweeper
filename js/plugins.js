@@ -19,6 +19,7 @@ var Ease = Ease || {};
 	//I am going to do a VERY simple local storage implementation, allowing the ability to save ONE single game.
 	//  Multiple instances running on the page?  they will have access to whatever localstorage keyed game they have defined.
 	Ease.localstorage = Modernizr.localstorage;
+	Ease.ie7 = ( $('.lte7').length ? true : false );
 	
 	Ease.Keys = {
 		RIGHT_CLICK: 3
@@ -119,9 +120,13 @@ var Ease = Ease || {};
 		setCounter: function(){
 			var html = '';
 			
-			$.each( this.counter.toString(), function(){
-				html += '<span>'+this+'</span>';
-			});
+			if( !Ease.ie7 ) {
+				$.each( this.counter.toString(), function(){
+					html += '<span>'+this+'</span>';
+				});
+			} else {
+				html = this.counter;
+			}
 			
 			this.$counter.html( html );
 		},
