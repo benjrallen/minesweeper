@@ -1,0 +1,306 @@
+@import 'partials/base';
+
+//some colors I like
+$base-blue:		#14A4CA;
+$base-purple:	#9E4199;
+$base-teal:		#00B4B7;
+$base-orange: 	#E27F00;
+$base-yellow: 	#E5D700;
+$base-red: 		#D93C38;
+
+
+html, body{
+	width: 100%;
+	height: 100%;
+}
+
+body{
+	min-width: $base-width;
+	background: $base-white;
+}
+
+	
+.line{
+	height: 100%;
+	margin-left: -1px;
+	width: 1px;
+	@include inline-block;
+	vertical-align: middle;
+}
+
+
+#loading{
+	text-align: center;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 0;
+	//background: $base-white;
+		
+	& .text{
+		@include adjust-font-size-to( 18px );
+		@include inline-block;
+		vertical-align: middle;
+	}
+}
+
+#main{
+	position: relative;
+	z-index: 1;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	
+}
+
+
+$tile-border: #bbb;
+$tile-color: #999;
+$tile-hover: #777;
+$tile-active: #666;
+$tile-exposed: #ccc;
+$tile-flag: lighten( $base-blue, 0% );
+$tile-mine: lighten( $base-red, 20% );
+$tile-correct: lighten( $base-purple, 20% );
+$tile-boom: darken( $base-red, 20% );
+
+//tile text colors
+$one: darken( $base-blue, 15% );
+$two: $base-red;
+$three: $base-orange;
+$four: $base-teal;
+$five: $base-purple;
+$six: darken( $one, 30% );
+$seven: darken( $two, 30% );
+$eight: darken( $three, 30% );
+
+//inputs
+$inp-size: 12px;
+$inp-height: 20px;
+$inp-padd: 4px;
+$inp-border: darken( $tile-border, 20% );
+$inp-border-width: 1px;
+$label-width: 100px;
+$label-bg: #eee;
+$controls-width: 180px;
+
+.holder{
+	
+	@include inline-block;
+	vertical-align: middle;
+}
+
+.board, .controls{
+	@include inline-block;
+	vertical-align: middle;
+}
+
+
+button{
+	@include margin-leader(0.25);
+}
+
+.controls{
+	width: $controls-width;
+	margin-left: 2em;
+	
+	& button{
+		
+		&.newGame, &.validate, &.cheat{
+			padding-left: 0;
+			padding-right: 0;
+		}
+		&.newGame{
+			width: 100%;
+		}
+		&.validate, &.cheat, &.saveGame, &.loadGame{
+			width: 50%;
+		}
+	}
+	
+	& .inputBlock{
+		position: relative;
+		border: $inp-border-width solid $inp-border;
+		@include margin-leader(0.25);
+		//@include margin-trailer(0.25);
+		@include border-radius( 4px );
+		
+		& label, & input{
+			height: $inp-height;
+			line-height: $inp-height;
+			padding: $inp-padd;
+			font-size: $inp-size;
+			//border: $inp-border-width solid $inp-border;
+			border: none;
+		}
+		& label{
+			position: absolute;
+			width: $label-width;
+			text-align: left;
+			background: $label-bg;
+			border-right: $inp-border-width solid $inp-border;
+			@include border-radius( 4px 0 0 4px );
+		}
+		& input{
+			text-align: right;
+			padding-left: $inp-padd * 3 + $label-width;
+			width: $controls-width - ( $inp-padd * 4 + $label-width ) - $inp-border-width * 2;
+			margin-bottom: 0;
+		}
+	}
+	
+	$ct-color: $base-white;
+	
+	& .counter{
+		color: $base-white;
+		background: #2d2d2d;
+		font-family: monospace;
+		border: 1px solid $ct-color;
+		text-align: right;
+		
+		& span{
+			border-left: 1px solid $ct-color;
+			//border-top: 2px solid $ct-color;;
+			//border-bottom: 2px solid $ct-color;;
+			font-size: 24px;
+			line-height: 24px;
+			padding-left: 2px;
+			padding-right: 2px;
+			font-weight: bold;
+			
+		}
+	}
+}
+
+.messageBox{
+	//position: absolute;
+	//background: rgba( 255, 255, 255, 0.5 );
+	background: $base-white;
+	//height: 100%;
+	//width: 100%;
+	//@include opacity( 0.5 );
+	
+	& h2{}
+		
+	& h3{
+		font-style: italic;
+		font-weight: normal;
+		@include adjust-font-size-to( 14px );
+	}
+	
+	& .content{
+		@include inline-block;
+		vertical-align: middle;
+	}
+	
+	& .message{
+		height: 100%;
+		width: 100%;
+	}
+}
+
+@mixin tile-shadow( $color ){
+	@include box-shadow(
+		inset darken( $color, 10% ) -1px 1px 3px,
+		inset lighten( $color, 10% ) 1px -1px 3px 
+	);
+}
+
+.board{
+	//@include float-left;
+	
+	//background: #badaff;
+	
+	position: relative;
+	border-bottom: 1px solid $tile-border;
+
+	& .row{
+		border-left: 1px solid $tile-border;
+		border-top: 1px solid $tile-border;
+		display: block;
+		margin-left: 0;
+		//border-right: none;
+	}
+	
+	& .tile{
+		border-right: 1px solid $tile-border;
+		//border-left: none;
+		//border-top: none;
+		@include float-left;
+		display: block;
+		background: $tile-color;
+		height: 16px;
+		width: 16px;
+		//@include single-transition( background-color, 0.4s, 'ease-in-out' );
+		
+		@include tile-shadow( $tile-color );
+		
+		&.exposed{
+			background: $tile-exposed;
+			&:hover, &:active{
+				background: $tile-exposed;
+			}
+			
+			@include box-shadow( none );
+		}
+		
+		&.flag{
+			background: $tile-flag;
+			&:hover, &:active{
+				background: $tile-flag;
+			}
+
+			@include tile-shadow( $tile-flag );
+		}
+		
+		&.mine{
+			background: $tile-mine;
+			&:hover, &:active{
+				background: $tile-mine;
+			}
+			@include single-transition( background-color, 0.2s, 'ease-in-out' );
+
+			@include tile-shadow( $tile-mine );
+		}
+		
+		&.flag.mine{
+			background: $tile-correct;
+			&:hover, &:active{
+				background: $tile-correct;
+			}
+
+			@include tile-shadow( $tile-correct );
+		}
+		
+		&.exposed.mine{
+			background: $tile-boom;
+			&:hover, &:active{
+				background: $tile-boom;
+			}
+
+			@include tile-shadow( $tile-boom );
+		}
+		
+		&.adj0{
+			text-indent: -9999em;
+			//@include single-transition( none );
+		}
+		&.adj1{ color: $one };
+		&.adj2{ color: $two };
+		&.adj3{ color: $three };
+		&.adj4{ color: $four };
+		&.adj5{ color: $five };
+		&.adj6{ color: $six };
+		&.adj7{ color: $seven };
+		&.adj8{ color: $eight };
+		
+		&:hover{
+			background: $tile-hover;
+		}
+		&:active{
+			background: $tile-active;
+		}
+	}
+}
