@@ -81,8 +81,6 @@ var Ease = Ease || {};
 		},
 		
 		startGame: function(){			
-			//reset the object counter
-			this.counter = this.settings.numberOfMines;
 			//reset the mines
 			this.mines = [];
 			//set the board size
@@ -99,6 +97,9 @@ var Ease = Ease || {};
 				this.settings.numberOfMines = maxMines;
 			
 			maxMines = null;  //don't need that variable anymore
+
+			//reset the object counter
+			this.counter = this.settings.numberOfMines;
 
 			//display the right amount of mines
 			this.$mines.find('input').val( this.settings.numberOfMines );
@@ -208,7 +209,7 @@ var Ease = Ease || {};
 			if( Ease.localstorage ){
 				//savegame
 				this.$save = $('<button />', {
-						text: 'Save Game'
+						text: 'Save'
 					}).addClass( this.settings.saveGameClass + ' btn')
 					.click(function(){
 						that.saveLocal();
@@ -217,7 +218,7 @@ var Ease = Ease || {};
 
 				//savegame
 				this.$load = $('<button />', {
-						text: 'Load Game'
+						text: 'Load'
 					}).addClass( this.settings.loadGameClass + ' btn')
 					.click(function(){
 						that.loadLocal();

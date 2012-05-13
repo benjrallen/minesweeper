@@ -113,16 +113,18 @@ button{
 			padding-right: 0;
 		}
 		&.newGame{
-			width: 100%;
+			width: 98%;
 		}
 		&.validate, &.cheat, &.saveGame, &.loadGame{
-			width: 50%;
+			width: 49%;
+			@include float-left;
 		}
 	}
 	
 	& .inputBlock{
 		position: relative;
 		border: $inp-border-width solid $inp-border;
+		width: 98%;
 		@include margin-leader(0.25);
 		//@include margin-trailer(0.25);
 		@include border-radius( 4px );
@@ -146,7 +148,7 @@ button{
 		& input{
 			text-align: right;
 			padding-left: $inp-padd * 3 + $label-width;
-			width: $controls-width - ( $inp-padd * 4 + $label-width ) - $inp-border-width * 2;
+			width: $controls-width - ( $inp-padd * 4 + $label-width ) - $inp-border-width * 2 - 3;
 			margin-bottom: 0;
 		}
 	}
@@ -208,6 +210,12 @@ button{
 	);
 }
 
+@mixin tile-sprite( $xoff: 0, $yoff: 0 ){
+	background-image: url('../images/tile-sprite.png');
+	background-repeat: no-repeat;
+	background-position: $xoff $yoff;
+}
+
 .board{
 	//@include float-left;
 	
@@ -235,7 +243,8 @@ button{
 		width: 16px;
 		//@include single-transition( background-color, 0.4s, 'ease-in-out' );
 		
-		@include tile-shadow( $tile-color );
+		//@include tile-shadow( $tile-color );
+		@include tile-sprite( 0, 0 );
 		
 		&.exposed{
 			background: $tile-exposed;
@@ -248,39 +257,47 @@ button{
 		
 		&.flag{
 			background: $tile-flag;
+			//@include tile-shadow( $tile-flag );
+			@include tile-sprite( -60px, 0 );
+
 			&:hover, &:active{
 				background: $tile-flag;
+				@include tile-sprite( -60px, 0 );
 			}
-
-			@include tile-shadow( $tile-flag );
 		}
 		
 		&.mine{
 			background: $tile-mine;
+			//@include single-transition( background-color, 0.2s, 'ease-in-out' );
+			//@include tile-shadow( $tile-mine );			
+			@include tile-sprite( -20px, 0 );
+
 			&:hover, &:active{
 				background: $tile-mine;
+				@include tile-sprite( -20px, 0 );
 			}
-			@include single-transition( background-color, 0.2s, 'ease-in-out' );
-
-			@include tile-shadow( $tile-mine );
 		}
 		
 		&.flag.mine{
 			background: $tile-correct;
+			//@include tile-shadow( $tile-correct );
+			@include tile-sprite( -80px, 0 );
+
 			&:hover, &:active{
 				background: $tile-correct;
+				@include tile-sprite( -80px, 0 );
 			}
-
-			@include tile-shadow( $tile-correct );
 		}
 		
 		&.exposed.mine{
 			background: $tile-boom;
+			//@include tile-shadow( $tile-boom );
+			@include tile-sprite( -40px, 0 );
+
 			&:hover, &:active{
 				background: $tile-boom;
+				@include tile-sprite( -40px, 0 );
 			}
-
-			@include tile-shadow( $tile-boom );
 		}
 		
 		&.adj0{
